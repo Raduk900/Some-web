@@ -1,10 +1,12 @@
 const express = require('express')
 const sequelize = require('./util/database');
 const User = require('./models/users');
+const path = require('path');
 
 
 const app = express()
 app.use(express.json())
+app.use('/', express.static(path.join(__dirname + '/public/templates')))
 
 // const port = 3000
 
@@ -24,10 +26,15 @@ app.post('/users', async (req, res) => {
         return res.status(500).json(error);
     }
 });
-// app.listen(port, () => {
-//   console.log(`Example app listening on port ${port}`)
-// })
 
-sequelize.sync({force:false})
-    .then(() => app.listen(process.env.EXTERNALPORT))
-    .catch(err => log.error(err))
+app.post('/test', (req, res) => {
+    console.log(req.body); // { message: 'Hello from the frontend!' }
+    // Handle your logic here
+    res.status(200).json({ message: 'Response from the backend' });
+  });
+
+  sequelize.sync({ force: false }).then(() => {
+    app.listen(process.env.EXTERNALPORT, () => {
+      console.log(`Server is running on port ${process.env.EXTERNALPORT}`);
+    });
+  }).catch(err => console.error(err));

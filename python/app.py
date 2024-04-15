@@ -1,8 +1,13 @@
-from flask import Flask, request
+from flask import Flask, request, send_from_directory, jsonify
 from flask_sqlalchemy import SQLAlchemy
+from flask_cors import CORS
+from logger import setup_logger
 import os
 
 app = Flask(__name__)
+CORS(app)
+
+logger = setup_logger()
 
 if __name__=='__main__':
     app.run()
@@ -26,6 +31,13 @@ db.create_all()
 @app.route('/', methods=['GET'])
 def get():
     return "Hello python"
+
+@app.route('/test-endpoint', methods=['POST'])
+def test_endpoint():
+    data = request.json
+    logger.debug('Data received: %s', data)
+
+    return jsonify({'message': 'Data received on the backend'}), 200
 
 # Create Item
 @app.route('/items', methods=['POST'])
