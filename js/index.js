@@ -1,6 +1,6 @@
 const express = require('express')
 const sequelize = require('./util/database');
-const User = require('./models/users');
+const User = require('./models/front');
 const path = require('path');
 
 
@@ -14,7 +14,7 @@ app.get('/', (req, res) => {
   res.send('Hello Docker World!')
 })
 
-app.post('/users', async (req, res) => {
+app.post('/front', async (req, res) => {
     try {
         const { username, email } = req.body;
         const user = await User.create({
