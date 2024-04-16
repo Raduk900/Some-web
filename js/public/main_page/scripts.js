@@ -1,5 +1,21 @@
 document.addEventListener('DOMContentLoaded', function() {
-    
+  document.getElementById('idHome').addEventListener('click', function() {
+    fetch('http://localhost:8080/test-endpoint', {
+        method: 'POST',
+        headers: {
+            'Content-Type': 'application/json'
+        },
+        body: JSON.stringify({ message: 'Hello from the frontend!' })
+    })
+    .then(response => {
+        if (!response.ok) {
+            throw new Error(`HTTP error! status: ${response.status}`);
+        }
+        return response.json();
+    })
+    .then(data => console.log('Response from the backend:', data))
+    .catch(error => console.error('Error:', error));
+  });
 });
 
 function myMenuFunction() {
@@ -38,27 +54,4 @@ function register() {
   b.className += " white-btn";
   x.style.opacity = 0;
   y.style.opacity = 1;
-}
-
-document.addEventListener('DOMContentLoaded', function() {
-  document.getElementById('idHome').addEventListener('click', function() {
-    fetch('http://localhost:8080/test-endpoint', {
-        method: 'POST',
-        headers: {
-            'Content-Type': 'application/json'
-        },
-        body: JSON.stringify({ message: 'Hello from the frontend!' })
-    })
-    .then(response => {
-        if (!response.ok) {
-            throw new Error(`HTTP error! status: ${response.status}`);
-        }
-        return response.json();
-    })
-    .then(data => console.log('Response from the backend:', data))
-    .catch(error => console.error('Error:', error));
-  });
-});
-
-
-  
+} 
