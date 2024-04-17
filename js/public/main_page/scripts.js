@@ -18,6 +18,38 @@ document.addEventListener('DOMContentLoaded', function() {
   });
 });
 
+document.addEventListener('DOMContentLoaded', function() {
+  document.getElementById('signin').addEventListener('click', function () {
+    var username = document.getElementById("username").value;
+    var password = document.getElementById("password").value;
+    
+    if(username===""){
+      return alert("Input username");
+    }
+    else if(password===""){
+      return alert("Input password");
+    }
+    
+    fetch('http://localhost:8080/user-login', {
+        method: 'POST',
+        headers: {
+          'Content-Type': 'application/json'
+      },
+        body: JSON.stringify({ message: 'User sent from frontend',
+                              username: username,
+                              password: password})
+    })
+    .then(response => {
+        if (!response.ok) {
+            throw new Error(`HTTP error! status: ${response.status}`);
+        }
+        return response.json();
+    })
+    .then(data => console.log('Response from the backend:', data))
+    .catch(error => console.error('Error:', error));
+  })
+});
+
 function myMenuFunction() {
   var i = document.getElementById("navMenu");
 

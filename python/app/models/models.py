@@ -9,4 +9,5 @@ class Users(db.Model):
     id = db.Column(db.Integer, primary_key=True)
     name = db.Column(db.String(255))
     surname = db.Column(db.String(255))
+    username = db.Column(db.String(255))
     email = db.Column(db.String(255))
