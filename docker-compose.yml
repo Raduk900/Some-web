@@ -2,6 +2,18 @@ version: '4.28'
 
 services:
 
+  db:
+    container_name: db
+    image: postgres:12
+    ports:
+      - "5432:5432"
+    environment:
+      - POSTGRES_USER=postgres
+      - POSTGRES_PASSWORD=postgres
+      - POSTGRES_DB=postgres
+    volumes:
+      - pgdata:/var/lib/postgres/data
+
   jsapp:
     container_name: jsapp
     image: francescoxx/jsapp
@@ -30,18 +42,6 @@ services:
     depends_on:
       - db
       
-
-  db:
-    container_name: db
-    image: postgres:12
-    ports:
-      - "5432:5432"
-    environment:
-      - POSTGRES_USER=postgres
-      - POSTGRES_PASSWORD=postgres
-      - POSTGRES_DB=postgres
-    volumes:
-      - pgdata:/var/lib/postgres/data
       
 volumes:
   pgdata: {}
